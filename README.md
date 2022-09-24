@@ -4,65 +4,62 @@
   
 [Class Card]
   
-Constructor:카드한장생성  
-getSuit:카드무늬반환  
-getRank:카드등급반환  
-rankA:카드등급합이10이면A는11,아니면A는1  
+Constructor : 카드한장생성  
+getSuit() : 카드무늬반환  
+getRank() : 카드등급반환  
+rankA() : 카드등급합이10이면A는11,아니면A는1  
   
   
 [Class CardDeck]
   
-Constructor:creatDeck()메소드실행하여카드한벌(52장)생성  
-privatecreateSuit():13장생성  
-createDeck():4개의무늬각각13장씩생성하여카드1벌만들기  
-booleanmoreCards():덱에카드가남아있으면true,없으면false  
-newCard():카드덱에서임의로한장을선택해뽑아주는메소드  
+Constructor : creatDeck()메소드실행하여카드한벌(52장)생성  
+privatecreateSuit() : 13장생성  
+createDeck() : 4개의무늬각각13장씩생성하여카드1벌만들기  
+booleanmoreCards() : 덱에카드가남아있으면true,없으면false  
+newCard() : 카드덱에서임의로한장을선택해뽑아주는메소드  
   
   
 [interface CardPlayerBehavior]  
 
-wantsACard:카드를더받을지결정  
-receiveCard:카드받기  
-booleanbust:카드합이21이상이면bust  
+wantsACard() : 카드를더받을지결정  
+receiveCard() : 카드받기  
+booleanbust() : 카드합이21이상이면bust  
   
   
 [Abstract Class CardPlayer implements CardPlayerBehavior]  
   
-Constructor:들고있는카드초기화(ModelCard[][])  
-abstractbooleanwantsACard()  
-booleanreceiveCard():카드받기성공하면true,실패하면false  
-Card[]showCards():들고있는카드보여주기  
-abstractbooleanbust  
+Constructor : 들고있는카드초기화(ModelCard[][])  
+abstract boolean wantsACard()  
+boolean receiveCard() : 카드받기성공하면true,실패하면false  
+Card[] showCards() : 들고있는카드보여주기  
+abstract boolean bust() 
   
   
 [Class Dealer extends CardPlayer]  
   
-Constructor:CardPlayer상속  
-receiveCard():CardDeckClass의newCard()를호출해카드2장받아오기  
-처음에받은카드2장저장,hand[0]->비공개,hand[1]->공개  
-countCard():들고있는카드등급판정  
-wantsACard():등급이16이하이면한장더받기(receiveCard()실행)  
-받은카드hand[2]에추가  
-bust():2장혹은3장카드합이21이상이면bust  
+Constructor : CardPlayer상속  
+receiveCard() : CardDeckClass의newCard()를호출해카드2장받아오기 //처음에받은카드2장저장,hand[0]->비공개,hand[1]->공개  
+countCard() : 들고있는카드등급판정  
+wantsACard() : 등급이16이하이면한장더받기(receiveCard()실행)  //받은카드hand[2]에추가  
+bust() : 2장혹은3장카드합이21이상이면bust  
   
   
 [Class Visitor extends CardPlayer]  
   
-Constructor:CardPlayer상속  
-receiveCard(): CardDeck Class의newCard()를호출해카드2장받아오기  
-처음에받은카드2장저장,hand[0]->비공개, hand[1]->공개countCard():들고있는카드등급판정  
-wantsACard():등급이16이하이면Hit여부묻기(JButton HitButton 호출)  
-CardDeck Class의newCard()를호출해카드1장씩받아와저장  
-bust:모든카드합이21이상이면bust  
-intchips:가지고있는칩개수반환(이기면+1,지면-1,비기면+0,블랙잭+2)  
+Constructor : CardPlayer상속  
+receiveCard() : CardDeck Class의newCard()를호출해카드2장받아오기  
+처음에 받은 카드 2장 저장, hand[0] -> 비공개, hand[1]->공개countCard() : 들고있는 카드등급 판정  
+wantsACard() : 등급이 16이하이면 Hit여부 묻기(JButton HitButton 호출)  // CardDeck Class의newCard()를호출해카드1장씩받아와저장  
+bust : 모든 카드 합이 21이상이면 bust  
+intchips : 가지고있는 칩 개수 반환(이기면+1,지면-1,비기면+0,블랙잭+2)  
   
   
 # View  
   
 [Class GameFrame]  
   
-Constructor:프레임생성,패널끼우기(게임진행상황프린트)  
-clearFrame:새게임을실행하면프레임을새로갈기  
+Constructor : 프레임 생성,패널 끼우기(게임진행 상황 프린트)  
+clearFrame : 새 게임을 실행하면 프레임을 새로갈기  
   
 **view에서해야할일: 게임진행여부를 묻는 버튼, 딜러가 나누어 준 카드, 게임결과를 frame에 나타낸다.   
   
@@ -86,10 +83,10 @@ setResult()
   
 [Class GameButton]  
 
-Constructor:Model,View초기화  
+Constructor : Model,View초기화  
   
   
-**Controller에서해야할일:  게임 진행과정(손님의 Hit &Stay 여부로 게임이 진행됨)을 받고 그에 따라 view에 딜러가 나눠준 카드정보를 나타내거나 규칙에 따라 bust, 승패 여부를 출력하는 총체적인 클래스  
+**Controller에서 해야 할 일:  게임 진행과정(손님의 Hit &Stay 여부로 게임이 진행됨)을 받고 그에 따라 view에 딜러가 나눠준 카드정보를 나타내거나 규칙에 따라 bust, 승패 여부를 출력하는 총체적인 클래스  
   
 actionPerfomed(ActionEvent e)  
 Hit버튼과 Stay 버튼을 통해 딜러가 카드를 나눠주고, 나눠준 카드를 view에 나타내며 최종적으로 게임 결과를 view에 출력하게 한다.   
